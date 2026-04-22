@@ -1,19 +1,8 @@
-// ============================================================
-// FILE: Nav.jsx
-// PURPOSE: Top navigation bar — logo, links, CTA buttons
-// SECTION: Public marketing site — fixed header
-// DATA: Update links array to add/remove nav items
-// MANUAL EDITS: Safe to update link labels and hrefs in links[]
-// SEO: Nav links support internal linking and crawlability
-// CLAUDE AUTOMATION: Can add Client Login button, portal routes
-// ============================================================
-
 import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
+import AOLogo from './AOLogo'
 import { trackBookDemoClick, trackGetWebsiteClick } from '../lib/analytics'
 
-// ── NAV LINKS ─────────────────────────────────────────────────────────────────
-// MANUAL EDIT: Add or remove navigation items here
 const links = [
   { label: 'Services',     href: '#services' },
   { label: 'How It Works', href: '#how-it-works' },
@@ -38,26 +27,19 @@ export default function Nav() {
     <nav
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
       style={{
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        backgroundColor: scrolled ? 'rgba(11,18,32,0.92)' : 'rgba(11,18,32,0.70)',
-        borderBottom: scrolled ? '1px solid rgba(0,200,240,0.12)' : '1px solid transparent',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        backgroundColor: scrolled ? 'rgba(255,255,255,0.96)' : 'rgba(255,255,255,0.92)',
+        borderBottom: '1px solid rgba(122,156,255,0.15)',
+        boxShadow: scrolled ? '0 2px 20px rgba(122,156,255,0.08)' : 'none',
       }}
     >
       <div className="max-w-7xl mx-auto px-6 h-[68px] flex items-center justify-between">
 
-        {/* Logo — uses actual brand image with transparent background */}
+        {/* Logo */}
         <a href="#" className="flex items-center gap-3 group" aria-label="AO AI Solutions home">
-          <img
-            src="/logo-transparent.png"
-            alt="AO AI Solutions logo"
-            className="h-8 w-auto"
-            style={{ filter: 'brightness(1.1)' }}
-          />
-          <span
-            className="font-syne font-bold text-base text-ao-primary hidden sm:block"
-            style={{ letterSpacing: '-0.02em' }}
-          >
+          <AOLogo className="h-8 w-auto" color="#D4AF37" />
+          <span className="font-heading font-bold text-base text-ao-dark hidden sm:block" style={{ letterSpacing: '-0.01em' }}>
             AI Solutions
           </span>
         </a>
@@ -68,7 +50,7 @@ export default function Nav() {
             <a
               key={l.href}
               href={l.href}
-              className="font-dm text-sm text-ao-muted hover:text-ao-primary transition-colors duration-200"
+              className="font-dm text-sm text-ao-gray hover:text-ao-gold transition-colors duration-200"
             >
               {l.label}
             </a>
@@ -79,7 +61,7 @@ export default function Nav() {
         <div className="hidden lg:flex items-center gap-3">
           <a
             href="/login"
-            className="font-dm text-sm text-ao-muted hover:text-ao-primary transition-colors duration-200"
+            className="font-dm text-sm text-ao-gray hover:text-ao-gold transition-colors duration-200"
             aria-label="Client portal login"
           >
             Client Login
@@ -87,16 +69,16 @@ export default function Nav() {
           <a
             href="#contact"
             aria-label="Book a free strategy demo call"
-            className="font-dm text-sm text-ao-primary px-5 py-2 rounded-full transition-all duration-200 hover:-translate-y-px"
-            style={{ border: '1px solid rgba(0,200,240,0.30)' }}
+            className="font-dm font-medium text-sm text-ao-gold px-5 py-2 rounded-full transition-all duration-200 hover:-translate-y-px"
+            style={{
+              border: '1.5px solid #D4AF37',
+            }}
             onClick={() => trackBookDemoClick('nav')}
             onMouseEnter={e => {
-              e.currentTarget.style.borderColor = 'rgba(0,200,240,0.70)'
-              e.currentTarget.style.boxShadow   = '0 0 18px rgba(0,200,240,0.18)'
+              e.currentTarget.style.background = 'rgba(212,175,55,0.08)'
             }}
             onMouseLeave={e => {
-              e.currentTarget.style.borderColor = 'rgba(0,200,240,0.30)'
-              e.currentTarget.style.boxShadow   = 'none'
+              e.currentTarget.style.background = 'transparent'
             }}
           >
             Book a Demo
@@ -104,11 +86,20 @@ export default function Nav() {
           <a
             href="#contact"
             aria-label="Get started with an AI website"
-            className="font-dm text-sm font-medium text-ao-deep bg-ao-accent px-5 py-2 rounded-full transition-all duration-200 hover:-translate-y-px"
-            style={{ boxShadow: '0 0 0 rgba(0,200,240,0)' }}
+            className="font-dm text-sm font-medium text-ao-dark px-5 py-2 rounded-full transition-all duration-200 hover:-translate-y-px"
+            style={{
+              background: 'linear-gradient(135deg, #D4AF37, #E8C84A)',
+              boxShadow: '0 4px 20px rgba(212,175,55,0.35)',
+            }}
             onClick={() => trackGetWebsiteClick('nav')}
-            onMouseEnter={e => e.currentTarget.style.boxShadow = '0 0 28px rgba(0,200,240,0.55)'}
-            onMouseLeave={e => e.currentTarget.style.boxShadow = '0 0 0 rgba(0,200,240,0)'}
+            onMouseEnter={e => {
+              e.currentTarget.style.background = 'linear-gradient(135deg, #E8C84A, #F0D060)'
+              e.currentTarget.style.boxShadow = '0 6px 28px rgba(212,175,55,0.5)'
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.background = 'linear-gradient(135deg, #D4AF37, #E8C84A)'
+              e.currentTarget.style.boxShadow = '0 4px 20px rgba(212,175,55,0.35)'
+            }}
           >
             Get AI Website
           </a>
@@ -116,7 +107,7 @@ export default function Nav() {
 
         {/* Mobile hamburger */}
         <button
-          className="lg:hidden text-ao-primary p-1.5"
+          className="lg:hidden text-ao-dark p-1.5"
           onClick={() => setMobileOpen(v => !v)}
           aria-label="Toggle navigation menu"
         >
@@ -130,15 +121,15 @@ export default function Nav() {
         style={{ maxHeight: mobileOpen ? '440px' : '0' }}
       >
         <div
-          className="px-6 pb-6 pt-2 flex flex-col gap-4"
-          style={{ borderTop: '1px solid rgba(0,200,240,0.10)' }}
+          className="bg-white px-6 pb-6 pt-2 flex flex-col gap-4"
+          style={{ borderTop: '1px solid rgba(122,156,255,0.10)' }}
         >
           {links.map(l => (
             <a
               key={l.href}
               href={l.href}
               onClick={handleLink}
-              className="font-dm text-sm text-ao-muted hover:text-ao-primary transition-colors py-1"
+              className="font-dm text-sm text-ao-gray hover:text-ao-gold transition-colors py-1"
             >
               {l.label}
             </a>
@@ -146,7 +137,7 @@ export default function Nav() {
           <a
             href="/login"
             onClick={handleLink}
-            className="font-dm text-sm text-ao-muted hover:text-ao-primary transition-colors py-1"
+            className="font-dm text-sm text-ao-gray hover:text-ao-gold transition-colors py-1"
           >
             Client Login
           </a>
@@ -155,8 +146,8 @@ export default function Nav() {
               href="#contact"
               aria-label="Book a free strategy demo call"
               onClick={() => { handleLink(); trackBookDemoClick('nav-mobile') }}
-              className="font-dm text-sm text-ao-primary text-center px-5 py-2.5 rounded-full"
-              style={{ border: '1px solid rgba(0,200,240,0.30)' }}
+              className="font-dm text-sm text-ao-gold text-center px-5 py-2.5 rounded-full"
+              style={{ border: '1.5px solid #D4AF37' }}
             >
               Book a Demo
             </a>
@@ -164,7 +155,8 @@ export default function Nav() {
               href="#contact"
               aria-label="Get started with an AI website"
               onClick={() => { handleLink(); trackGetWebsiteClick('nav-mobile') }}
-              className="font-dm text-sm font-medium text-ao-deep bg-ao-accent text-center px-5 py-2.5 rounded-full"
+              className="font-dm text-sm font-medium text-ao-dark text-center px-5 py-2.5 rounded-full"
+              style={{ background: 'linear-gradient(135deg, #D4AF37, #E8C84A)' }}
             >
               Get AI Website
             </a>

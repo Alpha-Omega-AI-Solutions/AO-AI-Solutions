@@ -16,26 +16,26 @@ export default function SocialProof() {
   return (
     <section
       ref={ref}
-      className="py-6 px-6"
+      className="py-6 px-6 bg-white"
       style={{
-        borderTop:    '1px solid rgba(0,200,240,0.08)',
-        borderBottom: '1px solid rgba(0,200,240,0.08)',
+        borderTop:    '1px solid #E6E8EF',
+        borderBottom: '1px solid #E6E8EF',
         ...revealStyle(isVisible),
       }}
     >
       <div className="max-w-7xl mx-auto flex flex-wrap items-center gap-4 justify-center sm:justify-start">
-        <span className="font-dm text-sm text-ao-muted whitespace-nowrap mr-2">
-          Helping businesses in:
+        <span className="font-dm font-medium tracking-widest uppercase text-xs text-ao-gold whitespace-nowrap mr-2">
+          Trusted by businesses in:
         </span>
         {industries.map((industry, i) => (
           <span
             key={industry}
-            className="font-dm text-sm text-ao-muted px-3.5 py-1.5 rounded-full whitespace-nowrap"
+            className="font-dm text-sm text-ao-gray px-3.5 py-1.5 rounded-full whitespace-nowrap transition-colors duration-200 hover:text-ao-gold"
             style={{
-              border: '1px solid rgba(0,200,240,0.12)',
-              backgroundColor: 'rgba(0,200,240,0.04)',
+              border: '1px solid #E6E8EF',
+              backgroundColor: '#F7F9FF',
               opacity: isVisible ? 1 : 0,
-              transition: `opacity 0.5s ease ${100 + i * 50}ms`,
+              transition: `opacity 0.5s ease ${100 + i * 50}ms, color 0.2s ease`,
               willChange: 'opacity',
             }}
           >

@@ -3,14 +3,30 @@
 @tailwind utilities;
 
 :root {
-  --bg-deep:     #0B1220;
-  --bg-surface:  #101828;
-  --bg-elevated: #142030;
-  --accent:      #00C8F0;
-  --accent-dim:  rgba(0, 200, 240, 0.14);
-  --text-primary: #F0F4FF;
-  --text-muted:  #9BB0BA;
-  --border:      rgba(0, 200, 240, 0.12);
+  --brand-blue-start: #C9D9FF;
+  --brand-blue-end:   #7A9CFF;
+  --brand-gold:       #D4AF37;
+  --brand-gold-light: #E8C84A;
+  --brand-gold-dark:  #B8941F;
+  --brand-white:      #FFFFFF;
+  --brand-silver:     #E6E8EF;
+  --brand-dark:       #0F1115;
+  --brand-gray:       #4A5568;
+  --brand-gray-light: #718096;
+
+  --bg-primary:    #FFFFFF;
+  --bg-section:    linear-gradient(135deg, #C9D9FF 0%, #7A9CFF 100%);
+  --bg-card:       #FFFFFF;
+  --bg-elevated:   #F7F9FF;
+  --text-primary:  #0F1115;
+  --text-secondary:#4A5568;
+  --text-muted:    #718096;
+  --accent:        #D4AF37;
+  --accent-hover:  #E8C84A;
+  --border:        rgba(122, 156, 255, 0.2);
+  --border-gold:   rgba(212, 175, 55, 0.3);
+  --shadow-gold:   0 4px 24px rgba(212, 175, 55, 0.15);
+  --shadow-blue:   0 4px 24px rgba(122, 156, 255, 0.2);
 }
 
 * {
@@ -24,8 +40,8 @@ html {
 }
 
 body {
-  background-color: var(--bg-deep);
-  color: var(--text-primary);
+  background-color: #FFFFFF;
+  color: #0F1115;
   font-family: 'DM Sans', sans-serif;
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
@@ -60,14 +76,14 @@ body {
 
 @keyframes cellPulse {
   0%, 100% { opacity: 0.05; background: transparent; }
-  50%      { opacity: 1;    background: rgba(0,200,240,0.06); }
+  50%      { opacity: 1;    background: rgba(212,175,55,0.06); }
 }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg-deep); }
-::-webkit-scrollbar-thumb { background: rgba(0,200,240,0.2); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(0,200,240,0.4); }
+::-webkit-scrollbar-track { background: #F7F9FF; }
+::-webkit-scrollbar-thumb { background: rgba(122,156,255,0.3); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(212,175,55,0.4); }
 
 /* Section utility */
 .section-pad {
@@ -82,7 +98,7 @@ body {
 
 /* Section dividers */
 section + section {
-  border-top: 1px solid rgba(0, 200, 240, 0.06);
+  border-top: 1px solid rgba(122, 156, 255, 0.08);
 }
 
 /* Fade-in / Fade-up for Hero eyebrow/CTAs */
@@ -96,7 +112,7 @@ section + section {
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Screen-blend helper for logo images with dark backgrounds */
+/* Screen-blend helper */
 .blend-screen {
   mix-blend-mode: screen;
 }

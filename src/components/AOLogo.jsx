@@ -1,5 +1,5 @@
 // SVG recreation of the A|O geometric logo mark
-export default function AOLogo({ className = 'h-8 w-auto', color = '#00C8F0' }) {
+export default function AOLogo({ className = 'h-8 w-auto', color = '#D4AF37' }) {
   return (
     <svg
       className={className}

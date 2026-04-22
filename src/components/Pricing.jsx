@@ -1,15 +1,3 @@
-// ============================================================
-// FILE: Pricing.jsx
-// PURPOSE: Pricing tiers — Starter, Growth (highlighted), Enterprise
-// SECTION: Public marketing site — between SmartSites/Team and FAQ
-// DATA: Update plans array below to change tiers, features, prices
-// MANUAL EDITS: Safe to update setup price, monthly price, features, CTA labels
-// SEO: Targets "AI website pricing", "AI agency cost" search intent
-//      Pricing data is echoed in index.html JSON-LD Service schema
-//      Update both places when prices change
-// CLAUDE AUTOMATION: Can add new tiers, update feature lists
-// ============================================================
-
 import { useScrollReveal, revealStyle } from '../hooks/useScrollReveal'
 import { trackPricingCtaClick } from '../lib/analytics'
 
@@ -69,7 +57,7 @@ const plans = [
 function CheckIcon() {
   return (
     <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="flex-shrink-0 mt-0.5">
-      <path d="M2 7L5.5 10.5L12 3" stroke="#00C8F0" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M2 7L5.5 10.5L12 3" stroke="#D4AF37" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )
 }
@@ -79,27 +67,25 @@ export default function Pricing() {
   const [cardsRef,  cardsVisible]  = useScrollReveal()
 
   return (
-    <section
-      id="pricing"
-      className="section-pad"
-      style={{ backgroundColor: 'var(--bg-surface)' }}
-    >
+    <section id="pricing" className="section-pad bg-white">
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
         <div ref={headerRef} className="text-center mb-14">
+          <p className="font-dm font-medium tracking-widest uppercase text-sm text-ao-gold mb-3" style={revealStyle(headerVisible)}>
+            Pricing
+          </p>
           <h2
-            className="font-syne font-bold text-ao-primary mb-4"
+            className="font-heading font-bold text-ao-dark mb-4"
             style={{
               fontSize: 'clamp(34px, 4.5vw, 52px)',
-              letterSpacing: '-0.04em',
-              ...revealStyle(headerVisible),
+              ...revealStyle(headerVisible, 60),
             }}
           >
             AI Agency Pricing.<br className="hidden sm:block" /> Real Business Results.
           </h2>
           <p
-            className="font-dm font-light text-ao-muted max-w-lg mx-auto"
+            className="font-dm font-light text-ao-gray max-w-lg mx-auto"
             style={{ fontSize: '17px', ...revealStyle(headerVisible, 100) }}
           >
             No web designer rates. This is AI infrastructure.
@@ -107,20 +93,21 @@ export default function Pricing() {
         </div>
 
         {/* Cards */}
-        <div
-          ref={cardsRef}
-          className="grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch"
-        >
+        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch">
           {plans.map((plan, i) => (
             <div
               key={plan.tier}
               className="relative flex flex-col rounded-2xl p-7 transition-all duration-300"
               style={{
-                backgroundColor: plan.highlight ? 'rgba(0,200,240,0.06)' : 'var(--bg-elevated)',
+                background: plan.highlight
+                  ? 'linear-gradient(135deg, #C9D9FF 0%, #7A9CFF 100%)'
+                  : '#FFFFFF',
                 border: plan.highlight
-                  ? '1px solid rgba(0,200,240,0.35)'
-                  : '1px solid rgba(0,200,240,0.10)',
-                boxShadow: plan.highlight ? '0 0 50px rgba(0,200,240,0.10)' : 'none',
+                  ? '2px solid #D4AF37'
+                  : '1px solid rgba(122,156,255,0.18)',
+                boxShadow: plan.highlight
+                  ? '0 8px 32px rgba(212,175,55,0.2)'
+                  : '0 2px 16px rgba(122,156,255,0.1)',
                 opacity: cardsVisible ? 1 : 0,
                 transform: cardsVisible ? 'translateY(0)' : 'translateY(16px)',
                 transition: `opacity 0.55s ease ${i * 80}ms, transform 0.55s ease ${i * 80}ms, box-shadow 0.3s ease`,
@@ -128,14 +115,16 @@ export default function Pricing() {
               }}
               onMouseEnter={e => {
                 if (!plan.highlight) {
-                  e.currentTarget.style.boxShadow = '0 0 40px rgba(0,200,240,0.08)'
-                  e.currentTarget.style.borderColor = 'rgba(0,200,240,0.22)'
+                  e.currentTarget.style.boxShadow = '0 8px 32px rgba(212,175,55,0.12)'
+                  e.currentTarget.style.borderColor = 'rgba(212,175,55,0.3)'
+                  e.currentTarget.style.transform = 'translateY(-2px)'
                 }
               }}
               onMouseLeave={e => {
                 if (!plan.highlight) {
-                  e.currentTarget.style.boxShadow = 'none'
-                  e.currentTarget.style.borderColor = 'rgba(0,200,240,0.10)'
+                  e.currentTarget.style.boxShadow = '0 2px 16px rgba(122,156,255,0.1)'
+                  e.currentTarget.style.borderColor = 'rgba(122,156,255,0.18)'
+                  e.currentTarget.style.transform = cardsVisible ? 'translateY(0)' : 'translateY(16px)'
                 }
               }}
             >
@@ -143,8 +132,8 @@ export default function Pricing() {
               {plan.badge && (
                 <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
                   <span
-                    className="font-dm text-xs font-medium text-ao-deep px-3.5 py-1 rounded-full whitespace-nowrap"
-                    style={{ backgroundColor: '#00C8F0' }}
+                    className="font-dm text-xs font-medium text-ao-dark px-3.5 py-1 rounded-full whitespace-nowrap"
+                    style={{ background: 'linear-gradient(135deg, #D4AF37, #E8C84A)' }}
                   >
                     {plan.badge}
                   </span>
@@ -155,14 +144,14 @@ export default function Pricing() {
               <div className="mb-6">
                 <div className="flex items-baseline gap-2 mb-0.5">
                   <span
-                    className="font-syne font-bold text-ao-primary"
-                    style={{ fontSize: '22px', letterSpacing: '-0.03em' }}
+                    className={`font-heading font-bold ${plan.highlight ? 'text-ao-gold' : 'text-ao-dark'}`}
+                    style={{ fontSize: '22px' }}
                   >
                     {plan.tier}
                   </span>
                   <span
-                    className="font-dm text-xs px-2 py-0.5 rounded-full text-ao-muted"
-                    style={{ backgroundColor: 'rgba(136,150,168,0.10)', border: '1px solid rgba(136,150,168,0.15)' }}
+                    className="font-dm text-xs px-2 py-0.5 rounded-full text-ao-gray"
+                    style={{ backgroundColor: 'rgba(113,128,150,0.10)', border: '1px solid rgba(113,128,150,0.15)' }}
                   >
                     {plan.label}
                   </span>
@@ -170,18 +159,15 @@ export default function Pricing() {
               </div>
 
               {/* Pricing */}
-              <div className="mb-6 pb-6" style={{ borderBottom: '1px solid rgba(0,200,240,0.08)' }}>
-                <div
-                  className="font-syne font-bold text-ao-primary"
-                  style={{ fontSize: '36px', letterSpacing: '-0.04em' }}
-                >
+              <div
+                className="mb-6 pb-6"
+                style={{ borderBottom: plan.highlight ? '1px solid rgba(212,175,55,0.3)' : '1px solid rgba(122,156,255,0.15)' }}
+              >
+                <div className="font-heading font-bold text-ao-gold" style={{ fontSize: '36px' }}>
                   {plan.setup}
                 </div>
-                <div className="font-dm text-sm text-ao-muted mt-0.5">one-time setup</div>
-                <div
-                  className="font-dm font-medium text-ao-accent mt-3"
-                  style={{ fontSize: '18px' }}
-                >
+                <div className="font-dm text-sm text-ao-gray mt-0.5">one-time setup</div>
+                <div className="font-dm font-medium text-ao-gold mt-3" style={{ fontSize: '18px' }}>
                   + {plan.monthly}
                 </div>
               </div>
@@ -191,9 +177,7 @@ export default function Pricing() {
                 {plan.features.map(f => (
                   <li key={f} className="flex items-start gap-2.5">
                     <CheckIcon />
-                    <span className="font-dm font-light text-ao-muted" style={{ fontSize: '14px' }}>
-                      {f}
-                    </span>
+                    <span className="font-dm font-light text-ao-gray" style={{ fontSize: '14px' }}>{f}</span>
                   </li>
                 ))}
               </ul>
@@ -206,21 +190,32 @@ export default function Pricing() {
                 style={
                   plan.highlight
                     ? {
-                        backgroundColor: '#00C8F0',
-                        color: '#060A12',
-                        boxShadow: '0 0 0 rgba(0,200,240,0)',
+                        background: 'linear-gradient(135deg, #D4AF37, #E8C84A)',
+                        color: '#0F1115',
+                        boxShadow: '0 4px 20px rgba(212,175,55,0.35)',
                       }
                     : {
-                        color: 'var(--text-primary)',
-                        border: '1px solid rgba(0,200,240,0.28)',
+                        color: '#D4AF37',
+                        border: '1.5px solid #D4AF37',
+                        background: 'transparent',
                       }
                 }
                 onClick={() => trackPricingCtaClick(plan.tier)}
                 onMouseEnter={e => {
-                  if (plan.highlight) e.currentTarget.style.boxShadow = '0 0 28px rgba(0,200,240,0.45)'
+                  if (plan.highlight) {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #E8C84A, #F0D060)'
+                    e.currentTarget.style.boxShadow = '0 6px 28px rgba(212,175,55,0.5)'
+                  } else {
+                    e.currentTarget.style.background = 'rgba(212,175,55,0.08)'
+                  }
                 }}
                 onMouseLeave={e => {
-                  if (plan.highlight) e.currentTarget.style.boxShadow = '0 0 0 rgba(0,200,240,0)'
+                  if (plan.highlight) {
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #D4AF37, #E8C84A)'
+                    e.currentTarget.style.boxShadow = '0 4px 20px rgba(212,175,55,0.35)'
+                  } else {
+                    e.currentTarget.style.background = 'transparent'
+                  }
                 }}
               >
                 {plan.cta}

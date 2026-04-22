@@ -1,11 +1,3 @@
-// ============================================================
-// FILE: MarketingSite.jsx
-// PURPOSE: Public marketing site — assembles all sections in page order
-// SECTION: Pages — rendered at route "/"
-// MANUAL EDITS: Reorder, add, or remove section components here
-// CLAUDE AUTOMATION: Add new sections between existing ones as needed
-// ============================================================
-
 import Nav          from '../components/Nav'
 import Hero         from '../components/Hero'
 import SocialProof  from '../components/SocialProof'
@@ -23,14 +15,14 @@ import Footer       from '../components/Footer'
 
 export default function MarketingSite() {
   return (
-    <div className="bg-ao-deep min-h-screen">
+    <div className="bg-white min-h-screen">
 
-      {/* ── NAVIGATION ──────────────────────────────────────── */}
+      {/* Navigation */}
       <Nav />
 
-      {/* ── PAGE SECTIONS ───────────────────────────────────── */}
+      {/* Page sections */}
       <main>
-        {/* Hero — GrandSign emblem + headline + CTAs */}
+        {/* Hero — gradient blue, gold logo + CTAs */}
         <Hero />
 
         {/* Industry trust bar */}
@@ -67,7 +59,7 @@ export default function MarketingSite() {
         <Contact />
       </main>
 
-      {/* ── FOOTER ──────────────────────────────────────────── */}
+      {/* Footer */}
       <Footer />
 
     </div>

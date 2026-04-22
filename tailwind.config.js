@@ -4,16 +4,20 @@ export default {
   theme: {
     extend: {
       colors: {
-        'ao-deep':    '#060A12',
-        'ao-surface': '#0C1220',
-        'ao-elevated':'#111827',
-        'ao-accent':  '#00C8F0',
-        'ao-primary': '#F0F4FF',
-        'ao-muted':   '#8896A8',
+        'ao-blue-start': '#C9D9FF',
+        'ao-blue-end':   '#7A9CFF',
+        'ao-gold':       '#D4AF37',
+        'ao-gold-light': '#E8C84A',
+        'ao-gold-dark':  '#B8941F',
+        'ao-dark':       '#0F1115',
+        'ao-gray':       '#4A5568',
+        'ao-silver':     '#E6E8EF',
+        'ao-surface':    '#F7F9FF',
+        'ao-white':      '#FFFFFF',
       },
       fontFamily: {
-        syne: ['Syne', 'sans-serif'],
-        dm:   ['DM Sans', 'sans-serif'],
+        heading: ['Cormorant Garamond', 'Syne', 'serif'],
+        dm:      ['DM Sans', 'sans-serif'],
       },
       letterSpacing: {
         tight2: '-0.03em',
@@ -39,7 +43,7 @@ export default {
         },
         cellPulse: {
           '0%, 100%': { opacity: '0.04', backgroundColor: 'transparent' },
-          '50%':      { opacity: '1',    backgroundColor: 'rgba(0,200,240,0.06)' },
+          '50%':      { opacity: '1',    backgroundColor: 'rgba(212,175,55,0.06)' },
         },
         drift: {
           '0%, 100%': { transform: 'translateY(0px)' },

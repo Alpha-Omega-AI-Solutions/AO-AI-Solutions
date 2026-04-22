@@ -1,26 +1,13 @@
-// ============================================================
-// FILE: Services.jsx
-// PURPOSE: Service offerings grid — 6 service cards
-// SECTION: Public marketing site — "Everything Your Business Needs" block
-// DATA: Add, remove, or edit services in the `services` array below
-// MANUAL EDITS: Safe to update title, desc, tag in services[]
-// SEO: Service names match JSON-LD Service schema in index.html
-// CLAUDE AUTOMATION: Can update service descriptions, add new cards
-// ============================================================
-
 import { Globe, Zap, Cpu, Server, RefreshCw, Sparkles } from 'lucide-react'
 import { useScrollReveal, revealStyle } from '../hooks/useScrollReveal'
 
-// ── SERVICES DATA ─────────────────────────────────────────────────────────────
-// MANUAL EDIT: Update titles and descriptions here.
-// Keep matching entries updated in index.html Service JSON-LD schema.
 const services = [
   {
     icon: Globe,
     title: 'AI-Powered Websites',
     desc: 'Your website becomes an AI employee — with a trained chatbot, smart lead forms, automated scheduling, and 24/7 customer support.',
     tag: 'Core Product',
-    tagStyle: 'accent',
+    tagStyle: 'gold',
   },
   {
     icon: Zap,
@@ -33,7 +20,7 @@ const services = [
     title: 'Custom AI Integrations',
     desc: 'Internal AI assistants, document automation, knowledge base AI, and workflow tools tailored to how your business actually operates.',
     tag: 'Advanced',
-    tagStyle: 'accent',
+    tagStyle: 'gold',
   },
   {
     icon: Server,
@@ -62,12 +49,12 @@ function ServiceCard({ service, delay, isVisible }) {
 
   return (
     <div
-      className="group relative rounded-2xl p-6 transition-all duration-300 cursor-default"
+      className="group relative rounded-2xl p-6 bg-white transition-all duration-300 cursor-default"
       style={{
-        backgroundColor: 'var(--bg-surface)',
         border: service.comingSoon
-          ? '1px dashed rgba(0,200,240,0.12)'
-          : '1px solid rgba(0,200,240,0.10)',
+          ? '1px dashed rgba(122,156,255,0.18)'
+          : '1px solid rgba(122,156,255,0.18)',
+        boxShadow: '0 2px 16px rgba(122,156,255,0.1)',
         opacity: isVisible ? 1 : 0,
         transform: isVisible ? 'translateY(0)' : 'translateY(16px)',
         transition: `opacity 0.55s ease ${delay}ms, transform 0.55s ease ${delay}ms, box-shadow 0.3s ease, border-color 0.3s ease`,
@@ -75,27 +62,20 @@ function ServiceCard({ service, delay, isVisible }) {
       }}
       onMouseEnter={e => {
         if (!service.comingSoon) {
-          e.currentTarget.style.boxShadow = '0 0 40px rgba(0,200,240,0.10)'
-          e.currentTarget.style.transform = `translateY(-4px)`
+          e.currentTarget.style.boxShadow = '0 8px 32px rgba(212,175,55,0.12)'
+          e.currentTarget.style.borderColor = 'rgba(212,175,55,0.3)'
+          e.currentTarget.style.transform = 'translateY(-2px)'
         }
       }}
       onMouseLeave={e => {
-        e.currentTarget.style.boxShadow = 'none'
-        e.currentTarget.style.transform = isVisible ? 'translateY(0)' : 'translateY(30px)'
+        e.currentTarget.style.boxShadow = '0 2px 16px rgba(122,156,255,0.1)'
+        e.currentTarget.style.borderColor = service.comingSoon ? 'rgba(122,156,255,0.18)' : 'rgba(122,156,255,0.18)'
+        e.currentTarget.style.transform = isVisible ? 'translateY(0)' : 'translateY(16px)'
       }}
     >
-      {/* Icon */}
-      <div
-        className="w-10 h-10 rounded-lg flex items-center justify-center mb-4"
-        style={{
-          backgroundColor: 'rgba(0,200,240,0.10)',
-          border: '1px solid rgba(0,200,240,0.15)',
-        }}
-      >
-        <Icon
-          size={18}
-          color={service.comingSoon ? 'rgba(0,200,240,0.45)' : '#00C8F0'}
-        />
+      {/* Icon container */}
+      <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 bg-ao-blue-start/20">
+        <Icon size={18} color={service.comingSoon ? 'rgba(212,175,55,0.45)' : '#D4AF37'} />
       </div>
 
       {/* Tag */}
@@ -103,16 +83,16 @@ function ServiceCard({ service, delay, isVisible }) {
         <span
           className="inline-block font-dm text-xs mb-3 px-2.5 py-0.5 rounded-full"
           style={
-            service.tagStyle === 'accent'
+            service.tagStyle === 'gold'
               ? {
-                  color: '#00C8F0',
-                  backgroundColor: 'rgba(0,200,240,0.10)',
-                  border: '1px solid rgba(0,200,240,0.20)',
+                  color: '#D4AF37',
+                  backgroundColor: 'rgba(212,175,55,0.10)',
+                  border: '1px solid rgba(212,175,55,0.25)',
                 }
               : {
-                  color: 'var(--text-muted)',
-                  backgroundColor: 'rgba(136,150,168,0.08)',
-                  border: '1px solid rgba(136,150,168,0.18)',
+                  color: '#718096',
+                  backgroundColor: 'rgba(113,128,150,0.08)',
+                  border: '1px solid rgba(113,128,150,0.18)',
                 }
           }
         >
@@ -120,22 +100,16 @@ function ServiceCard({ service, delay, isVisible }) {
         </span>
       )}
 
-      <h3
-        className="font-syne font-bold text-ao-primary mb-2.5"
-        style={{
-          fontSize: '17px',
-          letterSpacing: '-0.02em',
-          color: service.comingSoon ? 'var(--text-muted)' : 'var(--text-primary)',
-        }}
-      >
+      <h3 className="font-heading font-bold text-ao-dark mb-2.5" style={{ fontSize: '18px' }}>
         {service.title}
       </h3>
-      <p
-        className="font-dm font-light leading-relaxed"
-        style={{ fontSize: '14px', color: 'var(--text-muted)' }}
-      >
+      <p className="font-dm font-light text-ao-gray leading-relaxed mb-4" style={{ fontSize: '14px' }}>
         {service.desc}
       </p>
+
+      {!service.comingSoon && (
+        <span className="font-dm text-sm text-ao-gold font-medium">Learn More →</span>
+      )}
     </div>
   )
 }
@@ -145,23 +119,25 @@ export default function Services() {
   const [gridRef,   gridVisible]   = useScrollReveal()
 
   return (
-    <section id="services" className="section-pad" style={{ backgroundColor: 'var(--bg-deep)' }}>
+    <section id="services" className="section-pad" style={{ backgroundColor: '#F7F9FF' }}>
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
         <div ref={headerRef} className="text-center mb-16">
+          <p className="font-dm font-medium tracking-widest uppercase text-sm text-ao-gold mb-3" style={revealStyle(headerVisible)}>
+            Our Services
+          </p>
           <h2
-            className="font-syne font-bold text-ao-primary mb-4"
+            className="font-heading font-bold text-ao-dark mb-4"
             style={{
               fontSize: 'clamp(36px, 5vw, 52px)',
-              letterSpacing: '-0.04em',
-              ...revealStyle(headerVisible),
+              ...revealStyle(headerVisible, 60),
             }}
           >
             Everything Your Business Needs<br className="hidden sm:block" /> to Run on AI
           </h2>
           <p
-            className="font-dm font-light text-ao-muted max-w-lg mx-auto"
+            className="font-dm font-light text-ao-gray max-w-lg mx-auto"
             style={{ fontSize: '17px', ...revealStyle(headerVisible, 120) }}
           >
             One system. Five layers. Built to work while you sleep.
@@ -169,17 +145,9 @@ export default function Services() {
         </div>
 
         {/* Grid */}
-        <div
-          ref={gridRef}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-        >
+        <div ref={gridRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {services.map((s, i) => (
-            <ServiceCard
-              key={s.title}
-              service={s}
-              delay={i * 80}
-              isVisible={gridVisible}
-            />
+            <ServiceCard key={s.title} service={s} delay={i * 80} isVisible={gridVisible} />
           ))}
         </div>
       </div>

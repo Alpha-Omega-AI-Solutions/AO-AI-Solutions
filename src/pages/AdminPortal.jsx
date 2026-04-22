@@ -1,23 +1,15 @@
-// ============================================================
-// FILE: AdminPortal.jsx
-// PURPOSE: Admin dashboard — leads table, status management, client list
-// SECTION: Pages — rendered at route "/admin" (auth-protected, admin only)
-// DATA: Reads from Supabase leads table; update columns as schema evolves
-// MANUAL EDITS: Safe to add columns, filters, or status options
-// CLAUDE AUTOMATION: Can add CSV export, email triggers, analytics
-// ============================================================
-
 import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { Users, Inbox, LogOut, LayoutDashboard, RefreshCw } from 'lucide-react'
+import AOLogo from '../components/AOLogo'
 
 const STATUS_COLORS = {
-  new:         { bg: 'rgba(0,200,240,0.12)',  border: 'rgba(0,200,240,0.30)',  text: '#00C8F0' },
-  contacted:   { bg: 'rgba(250,204,21,0.10)', border: 'rgba(250,204,21,0.30)', text: '#FDE047' },
-  qualified:   { bg: 'rgba(74,222,128,0.10)', border: 'rgba(74,222,128,0.30)', text: '#4ADE80' },
-  closed:      { bg: 'rgba(139,92,246,0.10)', border: 'rgba(139,92,246,0.30)', text: '#A78BFA' },
-  lost:        { bg: 'rgba(239,68,68,0.10)',  border: 'rgba(239,68,68,0.30)',  text: '#F87171' },
+  new:         { bg: 'rgba(212,175,55,0.12)',  border: 'rgba(212,175,55,0.35)',  text: '#D4AF37' },
+  contacted:   { bg: 'rgba(122,156,255,0.12)', border: 'rgba(122,156,255,0.35)', text: '#7A9CFF' },
+  qualified:   { bg: 'rgba(74,222,128,0.10)',  border: 'rgba(74,222,128,0.30)',  text: '#16a34a' },
+  closed:      { bg: 'rgba(139,92,246,0.10)',  border: 'rgba(139,92,246,0.30)',  text: '#7c3aed' },
+  lost:        { bg: 'rgba(239,68,68,0.10)',   border: 'rgba(239,68,68,0.30)',   text: '#dc2626' },
 }
 
 export default function AdminPortal() {
@@ -38,7 +30,6 @@ export default function AdminPortal() {
   }
 
   useEffect(() => {
-    // Verify admin role
     supabase.auth.getUser().then(async ({ data: { user } }) => {
       if (!user) { navigate('/login'); return }
       const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).single()
@@ -60,23 +51,25 @@ export default function AdminPortal() {
   }
 
   return (
-    <div className="min-h-screen flex" style={{ backgroundColor: 'var(--bg-deep)' }}>
+    <div className="min-h-screen flex" style={{ backgroundColor: '#F7F9FF' }}>
 
-      {/* ── SIDEBAR ─────────────────────────────────────────── */}
+      {/* Sidebar */}
       <aside
-        className="w-60 flex-shrink-0 flex flex-col"
+        className="w-60 flex-shrink-0 flex flex-col bg-white"
         style={{
-          backgroundColor: 'var(--bg-surface)',
-          borderRight: '1px solid rgba(0,200,240,0.10)',
+          borderRight: '1px solid rgba(122,156,255,0.15)',
           minHeight: '100vh',
         }}
       >
+        {/* Gradient accent strip at top */}
+        <div style={{ height: '4px', background: 'linear-gradient(135deg, #C9D9FF 0%, #7A9CFF 100%)' }} />
+
         <div
           className="flex items-center gap-2.5 px-6 py-5"
-          style={{ borderBottom: '1px solid rgba(0,200,240,0.08)' }}
+          style={{ borderBottom: '1px solid rgba(122,156,255,0.12)' }}
         >
-          <img src="/logo-transparent.png" alt="AO AI Solutions" className="h-7 w-auto" style={{ filter: 'brightness(1.1)' }} />
-          <span className="font-syne font-bold text-sm text-ao-primary" style={{ letterSpacing: '-0.02em' }}>Admin</span>
+          <AOLogo className="h-7 w-auto" color="#D4AF37" />
+          <span className="font-heading font-bold text-sm text-ao-dark">Admin</span>
         </div>
 
         <nav className="flex-1 px-3 py-4 flex flex-col gap-1">
@@ -90,20 +83,20 @@ export default function AdminPortal() {
               <a
                 key={item.label}
                 href={item.href}
-                className="flex items-center gap-3 px-3 py-2.5 rounded-lg font-dm text-sm text-ao-primary transition-colors duration-200"
-                style={{ backgroundColor: 'rgba(0,200,240,0.06)' }}
+                className="flex items-center gap-3 px-3 py-2.5 rounded-lg font-dm text-sm text-ao-dark transition-colors duration-200"
+                style={{ backgroundColor: 'rgba(201,217,255,0.2)' }}
               >
-                <Icon size={16} />
+                <Icon size={16} color="#7A9CFF" />
                 {item.label}
               </a>
             )
           })}
         </nav>
 
-        <div className="px-3 pb-5" style={{ borderTop: '1px solid rgba(0,200,240,0.08)', paddingTop: '16px' }}>
+        <div className="px-3 pb-5" style={{ borderTop: '1px solid rgba(122,156,255,0.12)', paddingTop: '16px' }}>
           <button
             onClick={handleSignOut}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg font-dm text-sm text-ao-muted hover:text-red-400 transition-colors duration-200 w-full"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg font-dm text-sm text-ao-gray hover:text-red-500 transition-colors duration-200 w-full"
           >
             <LogOut size={16} />
             Sign Out
@@ -111,26 +104,23 @@ export default function AdminPortal() {
         </div>
       </aside>
 
-      {/* ── MAIN ────────────────────────────────────────────── */}
+      {/* Main */}
       <main className="flex-1 px-8 py-8">
 
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1
-              className="font-syne font-bold text-ao-primary mb-1"
-              style={{ fontSize: '26px', letterSpacing: '-0.03em' }}
-            >
+            <h1 className="font-heading font-bold text-ao-dark mb-1" style={{ fontSize: '26px' }}>
               Leads
             </h1>
-            <p className="font-dm text-sm text-ao-muted">
+            <p className="font-dm text-sm text-ao-gray">
               {leads.length} total submissions
             </p>
           </div>
           <button
             onClick={fetchLeads}
-            className="flex items-center gap-2 font-dm text-sm text-ao-muted hover:text-ao-primary transition-colors duration-200 px-4 py-2 rounded-lg"
-            style={{ border: '1px solid rgba(0,200,240,0.14)' }}
+            className="flex items-center gap-2 font-dm text-sm text-ao-gray hover:text-ao-gold transition-colors duration-200 px-4 py-2 rounded-lg bg-white"
+            style={{ border: '1px solid rgba(122,156,255,0.2)' }}
           >
             <RefreshCw size={14} />
             Refresh
@@ -139,20 +129,27 @@ export default function AdminPortal() {
 
         {/* Leads table */}
         <div
-          className="rounded-xl overflow-hidden"
-          style={{ border: '1px solid rgba(0,200,240,0.10)' }}
+          className="rounded-xl overflow-hidden bg-white"
+          style={{ border: '1px solid rgba(122,156,255,0.18)', boxShadow: '0 2px 16px rgba(122,156,255,0.08)' }}
         >
           {loading ? (
             <div className="flex items-center justify-center py-20">
-              <span className="font-dm text-sm text-ao-muted">Loading leads…</span>
+              <span className="font-dm text-sm text-ao-gray">Loading leads…</span>
             </div>
           ) : leads.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20 text-center">
-              <div className="font-syne font-bold text-ao-primary mb-2" style={{ fontSize: '18px' }}>No leads yet</div>
-              <p className="font-dm text-sm text-ao-muted mb-4 max-w-xs">
-                Leads from your contact form will appear here once the Supabase <code className="text-ao-accent text-xs">leads</code> table is set up.
+              <div className="font-heading font-bold text-ao-dark mb-2" style={{ fontSize: '18px' }}>No leads yet</div>
+              <p className="font-dm text-sm text-ao-gray mb-4 max-w-xs">
+                Leads from your contact form will appear here once the Supabase{' '}
+                <code
+                  className="text-ao-gold text-xs px-1 py-0.5 rounded"
+                  style={{ backgroundColor: 'rgba(212,175,55,0.10)' }}
+                >
+                  leads
+                </code>{' '}
+                table is set up.
               </p>
-              <Link to="/" className="font-dm text-sm text-ao-accent underline underline-offset-4">
+              <Link to="/" className="font-dm text-sm text-ao-gold underline underline-offset-4">
                 Go to site
               </Link>
             </div>
@@ -160,11 +157,11 @@ export default function AdminPortal() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr style={{ backgroundColor: 'var(--bg-surface)', borderBottom: '1px solid rgba(0,200,240,0.08)' }}>
+                  <tr style={{ backgroundColor: '#F7F9FF', borderBottom: '1px solid rgba(122,156,255,0.12)' }}>
                     {['Name', 'Company', 'Email', 'Service', 'Date', 'Status'].map(col => (
                       <th
                         key={col}
-                        className="font-dm text-xs text-ao-muted px-4 py-3 text-left"
+                        className="font-dm text-xs text-ao-gray px-4 py-3 text-left"
                         style={{ letterSpacing: '0.04em' }}
                       >
                         {col}
@@ -179,15 +176,15 @@ export default function AdminPortal() {
                       <tr
                         key={lead.id}
                         style={{
-                          backgroundColor: i % 2 === 0 ? 'var(--bg-deep)' : 'var(--bg-surface)',
-                          borderBottom: '1px solid rgba(0,200,240,0.05)',
+                          backgroundColor: i % 2 === 0 ? '#FFFFFF' : '#F7F9FF',
+                          borderBottom: '1px solid #E6E8EF',
                         }}
                       >
-                        <td className="font-dm text-sm text-ao-primary px-4 py-3">{lead.full_name}</td>
-                        <td className="font-dm text-sm text-ao-muted px-4 py-3">{lead.company}</td>
-                        <td className="font-dm text-sm text-ao-muted px-4 py-3">{lead.email}</td>
-                        <td className="font-dm text-sm text-ao-muted px-4 py-3">{lead.service}</td>
-                        <td className="font-dm text-xs text-ao-muted px-4 py-3">
+                        <td className="font-dm text-sm text-ao-dark px-4 py-3">{lead.full_name}</td>
+                        <td className="font-dm text-sm text-ao-gray px-4 py-3">{lead.company}</td>
+                        <td className="font-dm text-sm text-ao-gray px-4 py-3">{lead.email}</td>
+                        <td className="font-dm text-sm text-ao-gray px-4 py-3">{lead.service}</td>
+                        <td className="font-dm text-xs text-ao-gray px-4 py-3">
                           {new Date(lead.created_at).toLocaleDateString()}
                         </td>
                         <td className="px-4 py-3">
@@ -203,7 +200,7 @@ export default function AdminPortal() {
                             }}
                           >
                             {Object.keys(STATUS_COLORS).map(s => (
-                              <option key={s} value={s} style={{ backgroundColor: '#101828', color: '#F0F4FF' }}>
+                              <option key={s} value={s}>
                                 {s.charAt(0).toUpperCase() + s.slice(1)}
                               </option>
                             ))}

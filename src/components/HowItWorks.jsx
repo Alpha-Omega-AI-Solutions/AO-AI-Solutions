@@ -29,18 +29,20 @@ export default function HowItWorks() {
     <section
       id="how-it-works"
       className="section-pad"
-      style={{ backgroundColor: 'var(--bg-surface)' }}
+      style={{ background: 'linear-gradient(135deg, rgba(201,217,255,0.80) 0%, rgba(122,156,255,0.80) 100%)' }}
     >
       <div className="max-w-7xl mx-auto">
 
         {/* Header */}
         <div ref={headerRef} className="text-center mb-16">
+          <p className="font-dm font-medium tracking-widest uppercase text-sm text-ao-gold mb-3" style={revealStyle(headerVisible)}>
+            The Process
+          </p>
           <h2
-            className="font-syne font-bold text-ao-primary mb-4"
+            className="font-heading font-bold text-ao-dark mb-4"
             style={{
               fontSize: 'clamp(36px, 5vw, 52px)',
-              letterSpacing: '-0.04em',
-              ...revealStyle(headerVisible),
+              ...revealStyle(headerVisible, 60),
             }}
           >
             From Zero to AI-Powered in Days
@@ -54,7 +56,7 @@ export default function HowItWorks() {
           <div
             className="hidden lg:block absolute top-[44px] left-[calc(16.6%+20px)] right-[calc(16.6%+20px)] h-px"
             style={{
-              borderTop: '2px dashed rgba(0,200,240,0.25)',
+              borderTop: '2px dashed rgba(212,175,55,0.30)',
               opacity: stepsVisible ? 1 : 0,
               transition: 'opacity 0.8s ease 400ms',
             }}
@@ -74,32 +76,23 @@ export default function HowItWorks() {
               >
                 {/* Number circle */}
                 <div
-                  className="relative w-[88px] h-[88px] rounded-full flex items-center justify-center mb-6 z-10"
+                  className="relative w-[88px] h-[88px] rounded-full flex items-center justify-center mb-6 z-10 bg-white/70"
                   style={{
-                    background: 'radial-gradient(circle at center, rgba(0,200,240,0.14) 0%, rgba(0,200,240,0.04) 100%)',
-                    border: '1px solid rgba(0,200,240,0.25)',
+                    border: '2px solid rgba(212,175,55,0.4)',
+                    boxShadow: '0 4px 16px rgba(212,175,55,0.15)',
                   }}
                 >
-                  <span
-                    className="font-syne font-bold text-ao-accent"
-                    style={{ fontSize: '28px', letterSpacing: '-0.04em' }}
-                  >
+                  <span className="font-heading font-bold text-ao-gold" style={{ fontSize: '28px' }}>
                     {step.number}
                   </span>
                 </div>
 
                 <div className="text-3xl mb-3">{step.emoji}</div>
 
-                <h3
-                  className="font-syne font-bold text-ao-primary mb-3"
-                  style={{ fontSize: '22px', letterSpacing: '-0.03em' }}
-                >
+                <h3 className="font-heading font-bold text-ao-dark mb-3" style={{ fontSize: '22px' }}>
                   {step.title}
                 </h3>
-                <p
-                  className="font-dm font-light text-ao-muted leading-relaxed max-w-xs"
-                  style={{ fontSize: '15px' }}
-                >
+                <p className="font-dm font-light text-ao-dark leading-relaxed max-w-xs" style={{ fontSize: '15px' }}>
                   {step.desc}
                 </p>
               </div>
